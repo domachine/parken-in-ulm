@@ -2,5 +2,6 @@
 /dump.rdb
 /data/*
 /static/*
-/static/index.html
+!/static/index.html
+!/static/css
 /.nyc_output/*
