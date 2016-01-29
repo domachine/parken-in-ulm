@@ -50,3 +50,5 @@ tap.test('formats the data properly', (t) => {
   t.deepEqual(format(data), expected);
   t.end();
 });
+
+tap.deepEqual(format(null), [], 'converts null to empty object');
