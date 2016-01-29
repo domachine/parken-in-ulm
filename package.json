@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_PATH=. scripts/start",
+    "postinstall": "NODE_PATH=. scripts/build",
     "test": "NODE_PATH=. scripts/test"
   },
   "browserify": {
