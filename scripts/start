@@ -5,6 +5,7 @@ if [[ $NODE_ENV == production ]]; then
 else
   trap 'kill $(jobs -p)' EXIT
   redis-server redis.conf &
+  watchify --extension=.jsx client.js -o static/bundle.js -v &
   node-dev scripts/worker &
   node-dev server.js
 fi
