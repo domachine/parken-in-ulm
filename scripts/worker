@@ -11,7 +11,7 @@ const slug = require('slug');
 const xtend = require('xtend');
 
 run();
-setInterval(run, 5 * 60 * 60 * 1000);
+setInterval(run, 1 * 60 * 60 * 1000);
 
 function run() {
   util.log('Fetching data ...');
