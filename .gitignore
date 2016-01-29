@@ -1,3 +1,6 @@
 /node_modules/*
 /dump.rdb
 /data/*
+/static/*
+/static/index.html
+/.nyc_output/*
