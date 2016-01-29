@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ $NODE_ENV == production ]]; then
+  node server.js
+else
+  trap 'kill $(jobs -p)' EXIT
+  redis-server redis.conf &
+  node-dev scripts/worker &
+  node-dev server.js
+fi

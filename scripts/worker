@@ -1,0 +1,53 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const util = require('util');
+const config = require('config');
+const redis = require('redis').createClient(config.get('redisUrl'));
+const request = require('request');
+const cheerio = require('cheerio');
+const slug = require('slug');
+const xtend = require('xtend');
+
+run();
+setInterval(run, 5 * 60 * 60 * 1000);
+
+function run() {
+  util.log('Fetching data ...');
+  request('http://www.parken-in-ulm.de/index.php', save);
+
+  function save(err, r, body) {
+    if (err) return logError(err);
+    const $ = cheerio.load(body);
+    const data = $('#haupttabelle table tr[id^="ze"]')
+      .map(printParkingLot.bind(this, $))
+      .toArray()
+      .reduce(buildTree, {});
+    redis.hmset(`parkinglots`, data, end);
+  }
+}
+
+function printParkingLot($, i, el) {
+  const data = $(el).find('td');
+  return {
+    name: $(data.get(0)).text().trim(),
+    total: $(data.get(1)).text().trim(),
+    available: $(data.get(2)).text().trim(),
+    open: $(data.get(3)).text().trim(),
+  };
+}
+
+function buildTree(tree, object) {
+  return xtend(tree, {
+    [slug(object.name, { lower: true })]: JSON.stringify(object),
+  });
+}
+
+function logError(err) {
+  util.log(`ERROR: ${err.message}`);
+}
+
+function end() {
+  util.log('Data up-to-date!');
+}
