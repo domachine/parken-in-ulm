@@ -3,7 +3,8 @@
 const express = require('express');
 const config = require('config');
 const redis = require('redis').createClient(config.get('redisUrl'));
-const xtend = require('xtend');
+
+const format = require('./format_data');
 
 const parkinglots = module.exports = express.Router();
 
@@ -14,9 +15,6 @@ function all(req, res, next) {
 
   function send(err, results) {
     if (err) return next(err);
-    const data = Object.keys(results).map(
-      key => xtend(JSON.parse(results[key]), { id: key })
-    );
-    res.send(data);
+    res.send(format(results));
   }
 }
