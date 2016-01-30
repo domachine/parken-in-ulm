@@ -14,7 +14,7 @@ export default class Overview extends Component {
       state => state.searchString,
       (parkinglots, searchString) =>
         parkinglots.filter(lot =>
-          lot.name.toLowerCase().indexOf(searchString) !== -1
+          lot.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
         )
     );
 
@@ -69,5 +69,5 @@ export default class Overview extends Component {
 }
 
 Overview.propTypes = {
-  parkinglots: PropTypes.array.isRequired,
+  parkinglots: PropTypes.array,
 };

@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Appbar, Container, Panel } from 'muicss/react';
 import request from 'superagent';
-
-import Overview from 'containers/overview';
 
 export default class App extends Component {
   constructor() {
@@ -42,9 +40,15 @@ export default class App extends Component {
                 <div className="mui--text-center mui--text-button">Lade ...</div>
               </Panel>
             ) : null}
-          <Overview parkinglots={this.state.parkinglots} />
+          {React.cloneElement(this.props.children, {
+            parkinglots: this.state.parkinglots,
+          })}
         </Container>
       </div>
     );
   }
 }
+
+App.propTypes = {
+  children: PropTypes.element.isRequired,
+};
