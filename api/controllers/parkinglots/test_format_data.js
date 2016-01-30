@@ -52,3 +52,18 @@ tap.test('formats the data properly', (t) => {
 });
 
 tap.deepEqual(format(null), [], 'converts null to empty object');
+tap.test('converts numbers', (t) => {
+  const result = format({
+    kornhaus: JSON.stringify({
+      name: 'Kornhaus',
+      total: '135',
+      available: '',
+      open: 'mo - fr 10.30 - 24 Uhr, sa und so 6.30 - 24 Uhr',
+      id: 'kornhaus',
+    }),
+  });
+  const lot = result[0];
+  t.equal(lot.total, 135);
+  t.equal(lot.available, 0);
+  t.end();
+});
