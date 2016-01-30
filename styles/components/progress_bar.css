@@ -11,3 +11,11 @@
 .progress-bar__progress--green {
   background-color: #00E676;
 }
+
+.progress-bar__progress--yellow {
+  background-color: #FFD600;
+}
+
+.progress-bar__progress--red {
+  background-color: #FF3D00;
+}

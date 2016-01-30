@@ -27,7 +27,7 @@ export default class Stats extends Component {
     this.percentage = createSelector(
       this.total,
       this.available,
-      (total, available) => available / total * 100
+      (total, available) => (total - available) / total * 100
     );
 
     this.status = createSelector(
