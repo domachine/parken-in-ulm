@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Panel, TextInput } from 'muicss/react';
 import { createSelector } from 'reselect';
+import sortBy from 'lodash/sortBy';
 
 export default class Overview extends Component {
   constructor() {
@@ -13,9 +14,14 @@ export default class Overview extends Component {
       (state, props) => props.parkinglots,
       state => state.searchString,
       (parkinglots, searchString) =>
-        parkinglots.filter(lot =>
-          lot.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+        sortBy(
+          parkinglots
+            .filter(lot =>
+              lot.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+            ),
+          'available'
         )
+        .reverse()
     );
 
     this.state = {
