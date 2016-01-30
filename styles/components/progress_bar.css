@@ -1,0 +1,13 @@
+.progress-bar {
+  height: 50px;
+  background-color: #E0E0E0;
+}
+
+.progress-bar__progress {
+  height: 50px;
+  background-color: black;
+}
+
+.progress-bar__progress--green {
+  background-color: #00E676;
+}

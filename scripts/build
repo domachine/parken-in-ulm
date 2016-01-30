@@ -1,5 +1,6 @@
 #!/bin/bash
 
 if [[ $NODE_ENV == production ]]; then
+  find styles -name '*.css' | xargs cat >static/bundle.css
   browserify --extension=.jsx client.js -o static/bundle.js
 fi

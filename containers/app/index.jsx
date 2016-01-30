@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { Appbar, Container, Panel } from 'muicss/react';
 import request from 'superagent';
+import { Link } from 'react-router';
+
+import Overview from 'containers/overview';
 
 export default class App extends Component {
   constructor() {
@@ -30,6 +33,10 @@ export default class App extends Component {
   }
 
   render() {
+    const active = this.props.routes[1].component === Overview
+      ? 'overview'
+      : 'stats';
+
     return (
       <div>
         <Appbar />
@@ -40,6 +47,17 @@ export default class App extends Component {
                 <div className="mui--text-center mui--text-button">Lade ...</div>
               </Panel>
             ) : null}
+          <div className="mui--text-center">
+            <ul className="mui-tabs__bar">
+              <li className={active === 'overview' ? 'mui--is-active' : ''}>
+                <Link to="/">Übersicht</Link>
+              </li>
+              <li className={active === 'stats' ? 'mui--is-active' : ''}>
+                <Link to="/stats">Auslastung</Link>
+              </li>
+            </ul>
+          </div>
+          <br />
           {React.cloneElement(this.props.children, {
             parkinglots: this.state.parkinglots,
           })}
@@ -51,4 +69,5 @@ export default class App extends Component {
 
 App.propTypes = {
   children: PropTypes.element.isRequired,
+  routes: PropTypes.array.isRequired,
 };
