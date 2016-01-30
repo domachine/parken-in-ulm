@@ -1,5 +1,5 @@
 #!/bin/bash
 
-PATTERN=${1:-'./*/test_*.js'}
+PATTERN=${1:-'./**/test*.js'}
 find . -path "$PATTERN" ! -path './node_modules/*' \
   | xargs tap --node-arg=-r --node-arg=babel-core/register
